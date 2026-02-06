@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asshosting | Performance Infrastructure</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/92aefae731.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* --- GLOBAL RESET & VARIABLES --- */
+        :root {
+            --bg: #050505;
+            --primary: #8b5cf6;
+            --secondary: #3b82f6;
+            --text-main: #ffffff;
+            --text-dim: #a1a1aa;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.02);
+            --font-heading: 'Bricolage Grotesque', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND EFFECTS --- */
+        .mesh-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.12) 0%, transparent 40%);
+            z-index: -2;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black, transparent 80%);
+            z-index: -1;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, .logo { font-family: var(--font-heading); font-weight: 800; text-transform: uppercase; letter-spacing: -0.04em; }
+        .text-gradient {
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        section { padding: 100px 0; }
+
+        /* --- COMPONENTS --- */
+        .navbar {
+            position: fixed;
+            top: 0; width: 100%; padding: 25px 0;
+            z-index: 100; transition: 0.4s;
+        }
+        .navbar.scrolled {
+            padding: 15px 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-content { display: flex; justify-content: space-between; items-center; }
+        .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; }
+        .nav-links a { 
+            color: var(--text-dim); text-decoration: none; font-size: 12px; 
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; 
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--text-main); }
+
+        .btn {
+            padding: 15px 35px; border-radius: 12px; font-weight: 800;
+            text-transform: uppercase; font-size: 12px; letter-spacing: 0.1em;
+            text-decoration: none; transition: 0.4s; display: inline-block;
+            cursor: pointer; border: none;
+        }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(139, 92, 246, 0.4); }
+        .btn-outline { background: var(--glass); border: 1px solid var(--border); color: white; backdrop-filter: blur(10px); }
+        .btn-outline:hover { background: rgba(255,255,255,0.05); border-color: var(--primary); }
+
+        .card {
+            background: var(--glass); border: 1px solid var(--border);
+            padding: 40px; border-radius: 24px; backdrop-filter: blur(12px);
+            transition: 0.4s;
+        }
+        .card:hover { border-color: rgba(139, 92, 246, 0.4); transform: translateY(-5px); }
+
+        .badge {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            padding: 4px 12px; border-radius: 50px; font-size: 10px;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+            margin-bottom: 20px; display: inline-block;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero { text-align: center; min-height: 90vh; display: flex; align-items: center; }
+        .hero h1 { font-size: clamp(3rem, 10vw, 6rem); line-height: 0.9; margin-bottom: 20px; }
+        .hero p { color: var(--text-dim); font-size: 1.25rem; max-width: 700px; margin: 0 auto 40px; }
+        .hero-btns { display: flex; gap: 20px; justify-content: center; }
+
+        /* --- PRICING GRID --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px; margin-top: 60px;
+        }
+        .price-tag { font-size: 3rem; font-weight: 800; margin: 20px 0; font-family: var(--font-heading); }
+        .price-tag span { font-size: 1rem; color: var(--text-dim); }
+        .features-list { list-style: none; margin-bottom: 30px; }
+        .features-list li { padding: 10px 0; color: var(--text-dim); font-size: 14px; border-bottom: 1px solid var(--border); }
+        .features-list li i { color: var(--primary); margin-right: 10px; }
+
+        /* --- COMMUNITY --- */
+        .discord-flex { display: flex; gap: 60px; align-items: center; flex-wrap: wrap; }
+        .discord-text { flex: 1; min-width: 300px; }
+        .discord-widget { flex: 1; min-width: 300px; height: 500px; }
+        .discord-widget iframe { border-radius: 24px; border: 1px solid var(--border); }
+
+        /* --- TEAM SECTION --- */
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 50px; }
+        .member-card { text-align: center; }
+        .member-card img { width: 120px; height: 120px; border-radius: 50%; margin-bottom: 20px; border: 3px solid var(--border); }
+        .member-card h3 { font-size: 1.5rem; margin-bottom: 5px; }
+        .member-card span { color: var(--primary); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        /* --- FOOTER --- */
+        footer { border-top: 1px solid var(--border); padding: 60px 0; background: #020202; text-align: center; }
+        .footer-logo { font-size: 1.5rem; margin-bottom: 20px; display: block; }
+        .footer-copy { font-size: 12px; color: #444; text-transform: uppercase; letter-spacing: 0.2em; margin-top: 30px; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-btns { flex-direction: column; }
+            section { padding: 60px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mesh-bg"></div>
+    <div class="grid-overlay"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo" style="text-decoration: none; color: white; font-size: 1.5rem;">
+                ASS<span style="color: var(--primary);">HOSTING</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#plans">Nodes</a></li>
+                <li><a href="#community">Community</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#legal">Legal</a></li>
+                <li><a href="https://panel.asshost.qzz.io" class="btn btn-outline" style="padding: 10px 20px;">Panel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="badge">AMD EPYC™ Gen 4 Powered</div>
+            <h1>HOSTING <span class="text-gradient">EVOLVED.</span></h1>
+            <p>"Infrastructure without responsibility." Deploy on enterprise hardware with ultra-low latency and 99.9% uptime guarantee.</p>
+            <div class="hero-btns">
+                <a href="#plans" class="btn btn-primary">Browse Plans</a>
+                <a href="https://discord.gg/qpzhexB28F" class="btn btn-outline">Join Discord</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="plans">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 60px;">
+                <h2 style="font-size: 3rem;">Premium <span class="text-gradient">Nodes</span></h2>
+                <p style="color: var(--text-dim);">The gold standard for development and production servers.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Free Plan -->
+                <div class="card">
+                    <div class="badge">Development</div>
+                    <h3>Free Entry</h3>
+                    <div class="price-tag">$0<span>/forever</span></div>
+                    <ul class="features-list">
+                        <li><i class="fa-solid fa-microchip"></i> 4GB DDR4 RAM</li>
+                        <li><i class="fa-solid fa-bolt"></i> 200% EPYC Share</li>
+                        <li><i class="fa-solid fa-hard-drive"></i> 10GB NVMe SSD</li>
+                        <li><i class="fa-solid fa-shield"></i> Standard DDoS Protection</li>
+                    </ul>
+                    <a href="https://discord.gg/qpzhexB28F" class="btn btn-outline" style="width: 100%; text-align: center;">Claim Slot</a>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="card" style="border-color: var(--primary); background: rgba(139, 92, 246, 0.05);">
+                    <div class="badge">Enterprise</div>
+                    <h3>Elite Performance</h3>
+                    <div class="price-tag">CUSTOM<span>/dedicated</span></div>
+                    <ul class="features-list">
+                        <li><i class="fa-solid fa-microchip"></i> Dedicated EPYC Cores</li>
+                        <li><i class="fa-solid fa-bolt"></i> Unlimited RAM Scaling</li>
+                        <li><i class="fa-solid fa-hard-drive"></i> 100GB+ Gen4 NVMe</li>
+                        <li><i class="fa-solid fa-shield"></i> L7 Game Mitigation</li>
+                    </ul>
+                    <a href="https://discord.gg/qpzhexB28F" class="btn btn-primary" style="width: 100%; text-align: center;">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="community" style="background: rgba(255,255,255,0.01);">
+        <div class="container">
+            <div class="discord-flex">
+                <div class="discord-text">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Community <span class="text-gradient">Hub</span></h2>
+                    <p style="color: var(--text-dim); margin-bottom: 30px;">Join thousands of other creators and developers. Our Discord is the heart of Asshosting, offering instant support and hardware updates.</p>
+                    <a href="https://discord.gg/qpzhexB28F" class="btn btn-primary">Join the Community</a>
+                </div>
+                <div class="discord-widget">
+                    <iframe src="https://discord.com/widget?id=1376206023819268116&theme=dark" width="100%" height="100%" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 60px;">
+                <h2>The <span class="text-gradient">Founders</span></h2>
+            </div>
+            <div class="team-grid">
+                <div class="card member-card">
+                    <img src="https://cdn.discordapp.com/avatars/1421053008464187421/31ad4286789417728a59a69abba350fc.png" alt="Orschiki">
+                    <h3>Orschiki.dev</h3>
+                    <span>CEO & Founder</span>
+                </div>
+                <div class="card member-card">
+                    <img src="https://cdn.discordapp.com/avatars/1186216678732861531/d2f30f6c866ae43b81c267408ee238f5.png" alt="Tyler">
+                    <h3>Tyler</h3>
+                    <span>CTO & Founder</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="legal" style="text-align: center;">
+        <div class="container">
+            <h2 style="margin-bottom: 40px;">Legal <span class="text-gradient">Resources</span></h2>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="legal.html#tos" class="card" style="text-decoration: none; color: white; min-width: 250px;">
+                    <i class="fa-solid fa-gavel" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px; display: block;"></i>
+                    Terms of Service
+                </a>
+                <a href="legal.html#privacy" class="card" style="text-decoration: none; color: white; min-width: 250px;">
+                    <i class="fa-solid fa-shield-halved" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px; display: block;"></i>
+                    Privacy Policy
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <span class="logo footer-logo">ASS<span style="color: var(--primary);">HOSTING</span></span>
+            <div style="margin: 20px 0;">
+                <a href="#" style="color: #444; margin: 0 15px; text-decoration: none; font-weight: bold;">Status</a>
+                <a href="#" style="color: #444; margin: 0 15px; text-decoration: none; font-weight: bold;">API</a>
+                <a href="#" style="color: #444; margin: 0 15px; text-decoration: none; font-weight: bold;">Contact</a>
+            </div>
+            <p class="footer-copy">© 2025-2026 Asshosting. Built for the modern web.</p>
+            <p style="font-size: 10px; color: #333; margin-top: 10px; font-weight: bold;">NOT AFFILIATED WITH MOJANG OR MICROSOFT.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple Scroll Script for Navbar
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

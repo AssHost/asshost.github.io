@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asshosting | Legal Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/92aefae731.js" crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --bg: #050505;
+            --primary: #8b5cf6;
+            --secondary: #3b82f6;
+            --text-main: #ffffff;
+            --text-dim: #a1a1aa;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.03);
+            --sidebar-bg: #0a0a0a;
+            --font-heading: 'Bricolage Grotesque', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND --- */
+        .mesh-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 0% 0%, rgba(139, 92, 246, 0.08) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        /* --- NAV --- */
+        .navbar {
+            padding: 20px 0; border-bottom: 1px solid var(--border);
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--font-heading); font-weight: 800; font-size: 1.5rem; text-decoration: none; color: white; }
+
+        /* --- LEGAL LAYOUT --- */
+        .legal-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 60px;
+            padding-top: 60px;
+            padding-bottom: 100px;
+        }
+
+        /* --- STICKY SIDEBAR (DISCORD STYLE) --- */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        .sidebar-title {
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .sidebar-nav { list-style: none; }
+        .sidebar-nav li { margin-bottom: 10px; }
+        .sidebar-nav a {
+            text-decoration: none;
+            color: var(--text-dim);
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.2s;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        .sidebar-nav a:hover {
+            color: var(--text-main);
+            background: var(--glass);
+        }
+        .sidebar-nav a.active {
+            color: white;
+            background: rgba(139, 92, 246, 0.15);
+            border-left: 3px solid var(--primary);
+        }
+
+        /* --- CONTENT AREA (REDZONE STYLE) --- */
+        .legal-content {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 60px;
+        }
+        .legal-section { margin-bottom: 60px; }
+        .legal-section h1 { font-size: 3rem; margin-bottom: 10px; }
+        .legal-section h2 { font-size: 1.8rem; margin-top: 40px; margin-bottom: 20px; color: var(--primary); }
+        .legal-section p { color: var(--text-dim); margin-bottom: 20px; font-size: 16px; }
+        .last-updated { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 40px; }
+
+        .policy-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+        .policy-card h4 { margin-bottom: 10px; color: white; }
+
+        /* --- FOOTER --- */
+        footer { border-top: 1px solid var(--border); padding: 50px 0; text-align: center; font-size: 12px; color: #444; }
+
+        @media (max-width: 900px) {
+            .legal-layout { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .legal-content { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mesh-bg"></div>
+
+    <nav class="navbar">
+        <div class="container nav-flex">
+            <a href="index.html" class="logo">ASS<span style="color: var(--primary);">HOSTING</span></a>
+            <div style="display: flex; gap: 20px;">
+                <a href="https://discord.gg/qpzhexB28F" style="color: var(--text-dim); text-decoration: none; font-size: 13px; font-weight: 600;">Support</a>
+                <a href="https://panel.asshost.qzz.io" style="color: var(--primary); text-decoration: none; font-size: 13px; font-weight: 800;">Client Panel →</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="legal-layout">
+            
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar">
+                <div class="sidebar-title">Legal Documents</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#tos" class="active">Terms of Service</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#refund">Refund Policy</a></li>
+                    <li><a href="#aup">Acceptable Use (AUP)</a></li>
+                    <li><a href="#sla">Service Level Agreement</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Legal Content -->
+            <article class="legal-content">
+                
+                <!-- Terms of Service Section -->
+                <section id="tos" class="legal-section">
+                    <div class="last-updated">Last Updated: February 06, 2026</div>
+                    <h1>Terms of Service</h1>
+                    <p>By using the services provided by Asshosting ("we", "us", "our"), you agree to be bound by the following terms and conditions. Please read them carefully before deploying any infrastructure.</p>
+                    
+                    <h2>1. Account Responsibilities</h2>
+                    <p>You are responsible for maintaining the security of your account and any activities that occur under it. We are not liable for any loss or damage from your failure to comply with this security obligation.</p>
+                    
+                    <div class="policy-card">
+                        <h4>Security Protocol</h4>
+                        <p>We recommend enabling 2FA on the Client Panel immediately upon account creation to prevent unauthorized access to your VPS/Game nodes.</p>
+                    </div>
+
+                    <h2>2. Service Usage</h2>
+                    <p>Our services are provided "as is". While we strive for 99.9% uptime, Asshosting does not guarantee that the service will be uninterrupted, timely, or error-free.</p>
+                    
+                    <h2>3. Prohibited Content</h2>
+                    <p>Users may not use our services for: DDoS attacks, crypto-mining (unless specified), hosting illegal content, or any activity that violates international laws.</p>
+                </section>
+
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 60px 0;">
+
+                <!-- Privacy Policy Section -->
+                <section id="privacy" class="legal-section">
+                    <h1>Privacy Policy</h1>
+                    <p>Your privacy is critical to us. This section outlines what data we collect and how it is utilized to maintain your hosting environment.</p>
+                    
+                    <h2>1. Information We Collect</h2>
+                    <p>We collect minimal information required for service delivery:</p>
+                    <ul>
+                        <li style="color: var(--text-dim); margin-left: 20px;">Email address for account identification.</li>
+                        <li style="color: var(--text-dim); margin-left: 20px;">IP addresses for DDoS mitigation and security logs.</li>
+                        <li style="color: var(--text-dim); margin-left: 20px;">Billing information via our encrypted payment processors.</li>
+                    </ul>
+
+                    <h2>2. Data Retention</h2>
+                    <p>Logs are automatically purged every 30 days unless required for an ongoing security investigation or legal compliance.</p>
+                </section>
+
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 60px 0;">
+
+                <!-- Refund Policy Section -->
+                <section id="refund" class="legal-section">
+                    <h1>Refund Policy</h1>
+                    <p>We believe in our hardware, but we understand things happen. Our refund policy is designed to be fair to both parties.</p>
+                    
+                    <div class="policy-card" style="border-left: 4px solid var(--primary);">
+                        <h4>No Refund Eligibility</h4>
+                        <p>Refunds are not provided for: User error, change of mind, or dissatisfaction with performance that does not violate our SLA.</p>
+                    </div>
+                </section>
+
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.</p>
+            <p style="margin-top: 10px;">&copy; 2025-2026 Asshosting Infrastructure. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll active link switcher
+        const sections = document.querySelectorAll(".legal-section");
+        const navLi = document.querySelectorAll(".sidebar-nav a");
+        window.onscroll = () => {
+            var current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 120) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLi.forEach((a) => {
+                a.classList.remove("active");
+                if (a.getAttribute("href").includes(current)) {
+                    a.classList.add("active");
+                }
+            });
+        };
+    </script>
+</body>
+</html>
