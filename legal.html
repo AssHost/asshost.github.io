@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cube Hosting | Legal Center</title>
-    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="icon" type="image/png" href="cubehost.png">
+    
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -14,68 +16,193 @@
         :root {
             --bg: #020617;
             --primary: #3b82f6;
+            --secondary: #0ea5e9;
             --text-main: #ffffff;
             --text-dim: #94a3b8;
             --border: rgba(59, 130, 246, 0.15);
-            --glass: rgba(15, 23, 42, 0.4);
+            --glass: rgba(15, 23, 42, 0.6);
             --font-heading: 'Bricolage Grotesque', sans-serif;
+            --font-body: 'Inter', sans-serif;
         }
 
-        body { background-color: var(--bg); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.7; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        
-        .navbar { padding: 20px 0; border-bottom: 1px solid var(--border); background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            font-family: var(--font-body); 
+            line-height: 1.8; 
+            overflow-x: hidden; 
+        }
+
+        /* Background Effects */
+        .mesh-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+        /* Navbar */
+        .navbar { 
+            position: fixed; top: 0; width: 100%; padding: 20px 0; 
+            z-index: 1000; background: rgba(2, 6, 23, 0.8); 
+            backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); 
+        }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
         .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-weight: 800; text-decoration: none; color: white; font-size: 1.2rem; }
+        .nav-links { display: flex; gap: 25px; list-style: none; }
+        .nav-links a { 
+            color: var(--text-dim); text-decoration: none; font-size: 12px; 
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; transition: 0.3s; 
+        }
+        .nav-links a:hover { color: var(--primary); }
 
-        .legal-layout { display: grid; grid-template-columns: 280px 1fr; gap: 60px; padding: 60px 0; }
-        .sidebar { position: sticky; top: 100px; height: fit-content; }
-        .sidebar-nav a { text-decoration: none; color: var(--text-dim); font-size: 14px; display: block; padding: 8px 12px; border-radius: 8px; transition: 0.2s; }
-        .sidebar-nav a:hover { background: var(--glass); color: white; }
-        .sidebar-nav a.active { color: white; background: rgba(59, 130, 246, 0.15); border-left: 3px solid var(--primary); }
+        /* Section Headers (Redzone Style) */
+        .legal-header {
+            padding: 120px 0 60px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.05), transparent);
+        }
+        .legal-header h2 { 
+            font-family: var(--font-heading); font-size: 3.5rem; font-weight: 800; 
+            text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 10px;
+        }
+        .legal-header h5 { color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; }
 
-        .legal-content { background: var(--glass); border: 1px solid var(--border); border-radius: 24px; padding: 60px; }
-        h1 { font-family: var(--font-heading); font-size: 3rem; margin-bottom: 20px; }
-        h2 { font-family: var(--font-heading); color: var(--primary); margin-top: 40px; margin-bottom: 15px; }
-        p { color: var(--text-dim); margin-bottom: 20px; }
+        /* Content Area */
+        .content-box {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 60px;
+            margin-bottom: 80px;
+            backdrop-filter: blur(10px);
+        }
 
-        footer { border-top: 1px solid var(--border); padding: 50px 0; text-align: center; color: #475569; font-size: 12px; }
+        h3 { font-family: var(--font-heading); font-size: 1.5rem; margin: 40px 0 20px; color: #fff; border-left: 4px solid var(--primary); padding-left: 15px; }
+        h3 em { font-weight: 400; color: var(--text-dim); font-size: 1.1rem; display: block; margin-top: 10px; border-left: none; padding-left: 0; }
+        h4 { color: var(--text-dim); margin-bottom: 10px; font-weight: 400; font-size: 1rem; padding-left: 20px; position: relative; }
+        h4::before { content: "—"; position: absolute; left: 0; color: var(--primary); }
+        b { color: var(--primary); }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--border); padding: 60px 0; background: #010409; text-align: center; }
+        footer p { font-size: 13px; color: var(--text-dim); margin-bottom: 10px; }
+        footer a { color: var(--primary); text-decoration: none; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .legal-header h2 { font-size: 2.5rem; }
+            .content-box { padding: 30px; }
+            .nav-links { display: none; }
+        }
     </style>
 </head>
 <body>
+
+    <div class="mesh-bg"></div>
+
     <nav class="navbar">
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
-            <a href="index.html" class="logo"><img src="icon.png" width="24"> CUBE HOSTING</a>
-            <a href="https://gp.asshost.qzz.io" style="color: var(--primary); text-decoration: none; font-weight: 800; font-size: 13px;">CLIENT PANEL →</a>
+        <div class="container nav-content">
+            <a href="index.html" class="logo">
+                <img src="icon.png" width="24" alt="Cube Logo"> CUBE HOSTING
+            </a>
+            <ul class="nav-links">
+                <li><a href="#privacy">Privacy Policy</a></li>
+                <li><a href="#terms">Terms & Conditions</a></li>
+                <li><a href="#aup">AUP</a></li>
+                <li><a href="https://gp.cubehost.qzz.io/" style="color: var(--primary);">Panel →</a></li>
+            </ul>
         </div>
     </nav>
 
-    <main class="container">
-        <div class="legal-layout">
-            <aside class="sidebar">
-                <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--primary); margin-bottom: 20px; letter-spacing: 1px;">Legal Docs</div>
-                <nav class="sidebar-nav">
-                    <a href="#tos" class="active">Terms of Service</a>
-                    <a href="#privacy">Privacy Policy</a>
-                    <a href="#refund">Refund Policy</a>
-                </nav>
-            </aside>
+    <!-- PRIVACY POLICY -->
+    <header class="legal-header" id="privacy">
+        <div class="container">
+            <h5>Last Updated: Feb 18, 2026</h5>
+            <h2>Privacy Policy</h2>
+        </div>
+    </header>
 
-            <article class="legal-content">
-                <section id="tos">
-                    <div style="font-size: 12px; color: var(--primary); margin-bottom: 10px; font-weight: 700;">UPDATED: FEB 2026</div>
-                    <h1>Terms of Service</h1>
-                    <p>By using Cube Hosting services, you agree to comply with our hosting regulations. We prioritize security and performance for all users.</p>
-                    <h2>1. Usage Policy</h2>
-                    <p>Cube Hosting infrastructure is intended for legitimate development and production tasks. Any form of network abuse or illegal content hosting will result in immediate termination.</p>
-                </section>
-            </article>
+    <main class="container">
+        <div class="content-box">
+            <h3>
+                Cube Hosting (“the Service”, “we”, “us”, “our”) is a performance-driven hosting platform. 
+                By using the Service, you agree to this Privacy Policy.
+            </h3>
+
+            <h3><b>Information We Collect</b></h3>
+            <h4>Account details such as email, username, and discord ID</h4>
+            <h4>IP addresses and basic connection metadata for security logs</h4>
+            <h4>Activity logs generated by server usage and resource allocation</h4>
+            <h4>Optional billing information for premium infrastructure plans</h4>
+
+            <h3><b>How We Use Information</b></h3>
+            <h4>To manage accounts and provision high-performance hosting environments</h4>
+            <h4>To operate and protect our system infrastructure from malicious activity</h4>
+            <h4>To communicate service updates, maintenance windows, or technical issues</h4>
+            <h4>To process payments through secure, encrypted payment gateways</h4>
+
+            <h3><b>Sharing of Information</b></h3>
+            <h4>We do not sell or trade user personal data. We may disclose data only if required by law or to investigate severe policy violations/abuse.</h4>
+
+            <h3><b>Data Security</b></h3>
+            <h4>Data is stored on controlled, enterprise-grade systems with industry-standard safeguards. While we strive for absolute security, no system is 100% invulnerable.</h4>
+
+            <h3><b>User Rights</b></h3>
+            <h4>Users may request access, correction, or deletion of personal data via our Support Ticket system, unless retention is required for legal or security purposes.</h4>
+
+            <h3><b>Contact</b></h3>
+            <h4>Privacy inquiries: <b>support@cubehost.qzz.io</b></h4>
+        </div>
+    </main>
+
+    <!-- TERMS AND CONDITIONS -->
+    <header class="legal-header" id="terms">
+        <div class="container">
+            <h5>Last Updated: Feb 18, 2026</h5>
+            <h2>Terms & Conditions</h2>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="content-box">
+            <h3>
+                Cube Hosting provides enterprise infrastructure for developers and gamers. 
+                By accessing our services, you agree to be bound by these terms.
+            </h3>
+
+            <h3><b>Staff Protection</b></h3>
+            <h4>Harassment, threats, defamation, or attempts to exploit any Cube Hosting Operator are strictly prohibited.</h4>
+            <h4>We reserve the right to terminate accounts immediately for toxic behavior directed at staff, whether on or off our official platforms.</h4>
+
+            <h3><b>Service Availability</b></h3>
+            <h4>While we aim for 99.9% uptime, services are provided "as is". Cube Hosting is not liable for data loss; users are responsible for maintaining their own independent backups.</h4>
+
+            <h3><b>Account Eligibility</b></h3>
+            <h4>Users must provide accurate information. Multi-accounting to bypass resource limits is prohibited and will result in a permanent ban of all associated accounts.</h4>
+
+            <h3><b>Allowed Workloads</b></h3>
+            <h4>Only intended workloads are permitted. Game servers must be used for game hosting. Hidden proxies, tunneling, or crypto-mining are strictly prohibited unless on a custom dedicated plan.</h4>
+
+            <h3 id="aup"><b>Acceptable Use Policy (AUP)</b></h3>
+            <h4><b>Prohibited Activity:</b> Users may not host illegal content, distribute malware, or host copyrighted material without permission.</h4>
+            <h4><b>Network Abuse:</b> Outbound DDoS attacks, port scanning, or vulnerability testing from our nodes will result in instant termination.</h4>
+            <h4><b>Resource Abuse:</b> Consuming unreasonable resources beyond plan limits or intentionally trying to crash a node is prohibited.</h4>
+
+            <h3><b>Refunds</b></h3>
+            <h4>Due to the nature of digital infrastructure, refunds are issued solely at our discretion and are generally only provided in cases of documented service failure.</h4>
         </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>© 2025-2026 CUBE HOSTING INFRASTRUCTURE. NOT AFFILIATED WITH MOJANG AB.</p>
+            <p>© 2025-2026 CUBE HOSTING INFRASTRUCTURE. ALL RIGHTS RESERVED.</p>
+            <p>NOT AFFILIATED WITH MOJANG AB OR MICROSOFT.</p>
+            <p>Contact: <a href="mailto:support@cubehost.qzz.io">support@cubehost.qzz.io</a></p>
         </div>
     </footer>
+
 </body>
 </html>
